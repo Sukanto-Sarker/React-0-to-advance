@@ -1,0 +1,1 @@
+this is like old type html code that use many time same code ..its look bad .becouse its reuse same thing many time all code are same just ing and name are same so we make a  a jsx file  using props that is reusable
