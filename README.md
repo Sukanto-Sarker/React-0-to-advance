@@ -79,5 +79,101 @@ code comment আকারে
 
 
 
+📝 নোট: React Props + Array + map()
 
-using like api ar js file  then import it and then map it throw component
+এই উদাহরণে আমরা দেখছি কীভাবে
+একটি JS file (API এর মতো data source) থেকে ডাটা এনে
+props ব্যবহার করে একই component বারবার render করা যায়।
+
+📌 মূল ধারণা
+
+ডাটা আলাদা JS file এ রাখা হয় (যেন API থেকে আসছে)
+
+সেই ডাটা array of objects
+
+map() ব্যবহার করে প্রতিটা object থেকে props পাঠানো হয়
+
+Component শুধু props গ্রহণ করে UI দেখায়
+
+📂 Data Source (API-like JS file)
+const peopleInfo = [
+  {
+    id: 1,
+    name: "SUKANTO SARKER",
+    src: "https://img.freepik.com/free-photo/portrait-confident-young-businessman-with-his-arms-crossed_23-2148176206.jpg",
+    exp: 20,
+    tec: 9,
+  },
+  {
+    id: 2,
+    name: "Ridoy Ahmed",
+    src: "https://images.unsplash.com/photo-1615109398623-88346a601842",
+    exp: 30,
+    tec: 7,
+  },
+  {
+    id: 3,
+    name: "Robin Miah",
+    src: "https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0zMjgtMzY2LXRvbmctMDhfMS5qcGc.jpg",
+    exp: 50,
+    tec: 3,
+  },
+];
+
+export default peopleInfo;
+👉 এখানে প্রতিটা object = একজন ব্যক্তির তথ্য
+👉 পুরো array = props এর source
+import AboutMe from "./AboutMe";
+import peopleInfo from "./info";
+
+export default function App() {
+  return (
+    <>
+      {peopleInfo.map((person) => (
+        <AboutMe
+          key={person.id}
+          name={person.name}
+          src={person.src}
+          exp={person.exp}
+          tec={person.tec}
+        />
+      ))}
+    </>
+  );
+}
+এখানে কী হচ্ছে?
+
+peopleInfo একটি array
+
+map() প্রতিটা object ঘুরে দেখে
+
+প্রতিবার AboutMe component call হয়
+
+object এর value গুলো props হিসেবে পাঠানো হয়
+
+key React এর জন্য mandatory (performance + error avoid)
+
+
+export default function AboutMe({ name, src, exp, tec }) {
+  return (
+    <div className="card">
+      <img src={src} alt={name} width="200" />
+      <h2>{name}</h2>
+      <p>Experience: {exp} years</p>
+      <p>Technologies: {tec}</p>
+    </div>
+  );
+}
+
+
+⚙️ পুরো Flow (সহজ ভাষায়)
+
+ডাটা রাখা হলো info.js ফাইলে
+
+App.jsx এ সেই ডাটা import করা হলো
+
+map() দিয়ে array loop করা হলো
+
+প্রতিটা object → props হিসেবে পাঠানো হলো
+
+AboutMe শুধু props নিয়ে UI দেখালো
