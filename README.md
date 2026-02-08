@@ -76,3 +76,8 @@ code comment আকারে
 
 লিখে দিতে পারি 😄
 বললেই হলো 👌
+
+
+
+
+using like api ar js file  then import it and then map it throw component
