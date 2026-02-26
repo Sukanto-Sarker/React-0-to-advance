@@ -283,3 +283,163 @@ dispatch({ type: "INCREMENT" });
 ## 🔥 এক লাইনে মনে রাখো
 
 > **useReducer = state + action + reducer logic**
+
+
+# 🧠 React `useReducer` Todo App — বাংলা নোট (README.md)
+
+## 📌 Overview
+
+এই উদাহরণে React-এর **`useReducer` Hook** ব্যবহার করে একটি **Todo App** তৈরি করা হয়েছে।
+
+### ✨ Features
+
+* ➕ নতুন Task যোগ করা
+* ✏️ Task Edit করা
+* ❌ Task Delete করা
+* 🧠 `useReducer` দিয়ে state management
+
+---
+
+## 🧩 ব্যবহৃত Hooks
+
+```js
+useState()
+useReducer()
+```
+
+### 🔹 `useState`
+
+ব্যবহার করা হয়েছে:
+
+* Input text (`text`)
+* Edit mode (`editId`) handle করার জন্য
+
+### 🔹 `useReducer`
+
+ব্যবহার করা হয়েছে:
+
+* Todo list (tasks array) manage করার জন্য
+
+---
+
+## ⚙️ Initial State
+
+```js
+const [tasks, dispatch] = useReducer(todoReducer, []);
+```
+
+➡️ শুরুতে tasks একটি খালি array।
+
+---
+
+## 🧠 Reducer Function
+
+```js
+function todoReducer(state, action) {
+  switch (action.type) {
+    case "ADD_TASK":
+      return [...state, action.payload];
+
+    case "DELETE_TASK":
+      return state.filter(task => task.id !== action.payload);
+
+    case "EDIT_TASK":
+      return state.map(task =>
+        task.id === action.payload.id
+          ? { ...task, text: action.payload.text }
+          : task
+      );
+
+    default:
+      return state;
+  }
+}
+```
+
+---
+
+## 🚀 Actions ব্যাখ্যা
+
+### ➕ ADD_TASK
+
+নতুন task list-এ যোগ করে।
+
+```js
+dispatch({
+  type: "ADD_TASK",
+  payload: { id: Date.now(), text }
+});
+```
+
+---
+
+### ❌ DELETE_TASK
+
+নির্দিষ্ট task remove করে।
+
+```js
+dispatch({
+  type: "DELETE_TASK",
+  payload: task.id
+});
+```
+
+---
+
+### ✏️ EDIT_TASK
+
+নির্দিষ্ট task update করে।
+
+```js
+dispatch({
+  type: "EDIT_TASK",
+  payload: { id, text }
+});
+```
+
+---
+
+## 🧩 Submit Function Logic
+
+```js
+if (!text) return;
+```
+
+* Input খালি হলে কিছু করবে না
+
+```js
+if (editId) {
+  // edit mode
+} else {
+  // add mode
+}
+```
+
+* editId থাকলে → Edit
+* না থাকলে → Add
+
+---
+
+## 🎯 UI Flow
+
+1️⃣ User input এ task লিখে
+2️⃣ Add button চাপলে task যোগ হয়
+3️⃣ Edit চাপলে input এ text আসে
+4️⃣ Save চাপলে task update হয়
+5️⃣ Delete চাপলে task মুছে যায়
+
+---
+
+## ⭐ কেন এখানে `useReducer` ব্যবহার করা হয়েছে?
+
+কারণ:
+
+* একই state (tasks) এর উপর multiple actions আছে
+* Logic এক জায়গায় cleanভাবে রাখা যায়
+* Code scalable ও readable হয়
+
+---
+
+## 🔥 এক লাইনে মনে রাখো
+
+> **useReducer = complex state + multiple actions + clean logic**
