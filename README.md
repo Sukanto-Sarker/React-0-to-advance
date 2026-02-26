@@ -188,3 +188,98 @@ key React এর জন্য mandatory
 performance ভালো হয়
 
 warning / error এড়ানো যায়
+
+
+
+# 🧠 React `useReducer` Hook — বাংলা নোট
+
+## 📌 `useReducer` কী?
+
+`useReducer` হলো React-এর একটি Hook, যা **জটিল state management** করার জন্য ব্যবহার করা হয়।
+
+এটি `useState` এর বিকল্প, বিশেষ করে যখন:
+
+* একাধিক state একসাথে থাকে
+* state update আগের state-এর উপর নির্ভর করে
+* অনেক ধরনের action দিয়ে state পরিবর্তন করতে হয়
+
+---
+
+## 🧩 Basic Syntax
+
+```js
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+### এখানে —
+
+* **reducer** → state কিভাবে পরিবর্তন হবে তা নির্ধারণ করে
+* **initialState** → শুরুতে state-এর মান
+* **state** → বর্তমান state
+* **dispatch** → action পাঠানোর function
+
+---
+
+## ⚙️ Reducer Function Structure
+
+```js
+function reducer(state, action) {
+  switch (action.type) {
+    case "INCREMENT":
+      return { ...state, count: state.count + 1 };
+
+    case "DECREMENT":
+      return { ...state, count: state.count - 1 };
+
+    case "RESET":
+      return { ...state, count: 0 };
+
+    default:
+      return state;
+  }
+}
+```
+
+---
+
+## 🎯 Example Initial State
+
+```js
+const initialState = {
+  count: 0,
+};
+```
+
+---
+
+## 🚀 Dispatch কিভাবে কাজ করে
+
+```js
+dispatch({ type: "INCREMENT" });
+```
+
+➡️ `dispatch` action পাঠায় → reducer সেই action অনুযায়ী state পরিবর্তন করে।
+
+---
+
+## 🧠 `useState` vs `useReducer`
+
+| useState               | useReducer                  |
+| ---------------------- | --------------------------- |
+| ছোট state এর জন্য ভালো | জটিল state এর জন্য ভালো     |
+| সহজ syntax             | structure বেশি পরিষ্কার     |
+| কম logic               | বেশি logic handle করতে পারে |
+
+---
+
+## ⭐ Best Practice
+
+✔ reducer ও initialState component-এর বাইরে লিখো
+✔ সবসময় `default: return state` রাখো
+✔ action type clear নাম দাও (INCREMENT, RESET ইত্যাদি)
+
+---
+
+## 🔥 এক লাইনে মনে রাখো
+
+> **useReducer = state + action + reducer logic**
